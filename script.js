@@ -11,7 +11,14 @@ const librarySide = document.querySelector(".library-side");
 const formSide = document.querySelector(".form-side")
 const showButton = document.querySelector("#book-button")
 
-function addBookToLibrary() {
+function addBookToLibrary(author, title, pages, read) {
+    const book1 = new Book(author, title, pages, read);
+    myLibrary.push(book1);
+    updateCards();
+}
+
+function updateCards() {
+    librarySide.innerHTML="";
     for (let x = 0; x < myLibrary.length; x++) {
         const newCard = document.createElement("div");
         newCard.classList.add('card');
@@ -39,10 +46,10 @@ function addBookToLibrary() {
 
 function showForm() {
     showButton.style.display = "none";
-    const bookForm = document.createElement("form")
-    bookForm.classList.add("book-form")
+    const bookForm = document.createElement("form");
+    bookForm.classList.add("book-form");
 
-    formFields = ["Author", "Title", "Page count", "Been read?"]
+    formFields = ["Author", "Title", "Page count", "Been read?"];
 
     for (let x = 0; x < formFields.length; x++) {
         const formLabel = document.createElement("label");
@@ -57,13 +64,14 @@ function showForm() {
     }
 
     const submitButton = document.createElement("button");
-    submitButton.textContent("Submit");
+    submitButton.innerText = 'Submit';
     submitButton.setAttribute("type", "button");
-    submitButton.setAttribute("onclick", "")
-
+    submitButton.setAttribute("onclick", `addBookToLibrary(document.getElementById("Author").value, document.getElementById("Title").value,
+    document.getElementById("Page count").value, document.getElementById("Been read?").value)`);
     
+    bookForm.appendChild(submitButton);
 
-    formSide.appendChild(bookForm)
+    formSide.appendChild(bookForm);
 
 }
 
