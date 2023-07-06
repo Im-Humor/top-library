@@ -38,7 +38,7 @@ function addBookToLibrary() {
 }
 
 function showForm() {
-    showButton.style.display = "none"
+    showButton.style.display = "none";
     const bookForm = document.createElement("form")
     bookForm.classList.add("book-form")
 
@@ -56,7 +56,15 @@ function showForm() {
         bookForm.appendChild(formInput);
     }
 
+    const submitButton = document.createElement("button");
+    submitButton.textContent("Submit");
+    submitButton.setAttribute("type", "button");
+    submitButton.setAttribute("onclick", "")
+
+    
+
     formSide.appendChild(bookForm)
+
 }
 
 
