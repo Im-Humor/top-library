@@ -54,3 +54,12 @@ body {
     border-radius: 5px;
     margin: 1rem;
 }
+
+.form-side form {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
