@@ -11,12 +11,17 @@ const librarySide = document.querySelector(".library-side");
 const formSide = document.querySelector(".form-side")
 const showButton = document.querySelector("#book-button")
 
+// adds new book object to library at end of array
+// and also calls updateCards
 function addBookToLibrary(author, title, pages, read) {
     const book1 = new Book(author, title, pages, read);
     myLibrary.push(book1);
     updateCards();
 }
 
+// removes existing list of cards (if existant),
+// then iterates through myLibrary and adds all
+// book cards to the DOM
 function updateCards() {
     librarySide.innerHTML="";
     for (let x = 0; x < myLibrary.length; x++) {
@@ -44,6 +49,11 @@ function updateCards() {
     }
 }
 
+// on 'add book' button click, button disappears and
+// form is added to DOM to accept user input.
+// submit button's onclick attribute calls addBookToLibrary function
+// to add the form submission information to the form,
+// which also updates the visible book cards
 function showForm() {
     showButton.style.display = "none";
     const bookForm = document.createElement("form");
@@ -75,11 +85,3 @@ function showForm() {
 
 }
 
-
-
-
-
-
-//I think I'll use this when submitting a new book?
-//const book1 = new Book(author, title, pages, read)
-//myLibrary.push(book1)
