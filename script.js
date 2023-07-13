@@ -19,6 +19,20 @@ function addBookToLibrary(author, title, pages, read) {
     updateCards();
 }
 
+function removeBook(title) {
+    newTitle = title.slice(4)
+    const objectPos = myLibrary.findIndex(item => item.title == newTitle);
+    myLibrary.splice(objectPos, 1);
+    updateCards();
+}
+
+function readBook(title) {
+    newTitle = title.slice(5)
+    const objectPos = myLibrary.findIndex(item => item.title == newTitle);
+    myLibrary[objectPos].read += 1;
+    updateCards();
+}
+
 // removes existing list of cards (if existant),
 // then iterates through myLibrary and adds all
 // book cards to the DOM
@@ -30,6 +44,8 @@ function updateCards() {
     
         const newList = document.createElement("ul");
     
+        //lol unneccessary branch to find if 'read' 
+        //is equal to one (yes) or zero (no)
         for (let y in myLibrary[x]) {
             if (myLibrary[x][y] == 0) {
                 myLibrary[x][y] = "No"
@@ -44,7 +60,30 @@ function updateCards() {
         }
     
         newCard.appendChild(newList);
-    
+
+        //add delete button to each object's card
+        //assign an id to the card of the title
+        //add listener to remove event's target by ID
+        const deleteButton = document.createElement("button");
+        deleteButton.setAttribute("type", "button");
+        deleteButton.innerText = "X";
+        deleteButton.setAttribute("id", `del-${myLibrary[x].title}`)
+        deleteButton.addEventListener("click", event => {
+            removeBook(event.target.id);
+        })
+        newCard.appendChild(deleteButton);
+
+        //lol the below works but adjust to use
+        //true / false and remove weird branching
+        const readButton = document.createElement("button");
+        readButton.setAttribute("type", "button");
+        readButton.innerText = "Read?";
+        readButton.setAttribute("id", `read-${myLibrary[x].title}`);
+        readButton.addEventListener("click", event => {
+            readBook(event.target.id);
+        })
+        newCard.appendChild(readButton);
+
         librarySide.appendChild(newCard);
     }
 }
@@ -57,7 +96,6 @@ function updateCards() {
 function showForm() {
     showButton.style.display = "none";
     const bookForm = document.createElement("form");
-    bookForm.classList.add("book-form");
 
     formFields = ["Author", "Title", "Page count", "Been read?"];
 
