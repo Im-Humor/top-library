@@ -7,6 +7,13 @@ function Book(author, title, pages, read) {
     this.read = read;
 }
 
+Book.prototype.readBook = function(title) {
+    newTitle = title.slice(5)
+    const objectPos = myLibrary.findIndex(item => item.title == newTitle);
+    myLibrary[objectPos].read = Boolean(1 - myLibrary[objectPos].read);
+    updateCards();
+}
+
 const librarySide = document.querySelector(".library-side");
 const formSide = document.querySelector(".form-side")
 const showButton = document.querySelector("#book-button")
@@ -26,12 +33,6 @@ function removeBook(title) {
     updateCards();
 }
 
-function readBook(title) {
-    newTitle = title.slice(5)
-    const objectPos = myLibrary.findIndex(item => item.title == newTitle);
-    myLibrary[objectPos].read += 1;
-    updateCards();
-}
 
 // removes existing list of cards (if existant),
 // then iterates through myLibrary and adds all
@@ -44,17 +45,11 @@ function updateCards() {
     
         const newList = document.createElement("ul");
     
-        //lol unneccessary branch to find if 'read' 
-        //is equal to one (yes) or zero (no)
-        for (let y in myLibrary[x]) {
-            if (myLibrary[x][y] == 0) {
-                myLibrary[x][y] = "No"
-            }
-            else if (myLibrary[x][y] == 1) {
-                myLibrary[x][y] = "Yes"
-            }
+        const libFields = ['author', 'title', 'pages', 'read'];
+        for (let y = 0; y < libFields.length; y++) {
+            let iterField = myLibrary[x][libFields[y]];
             const listItem = document.createElement("li");
-            const itemText = document.createTextNode(y + ": " + myLibrary[x][y]);
+            const itemText = document.createTextNode(libFields[y] + ": " + iterField);
             listItem.appendChild(itemText);
             newList.appendChild(listItem);
         }
@@ -80,7 +75,7 @@ function updateCards() {
         readButton.innerText = "Read?";
         readButton.setAttribute("id", `read-${myLibrary[x].title}`);
         readButton.addEventListener("click", event => {
-            readBook(event.target.id);
+            myLibrary[x].readBook(event.target.id);
         })
         newCard.appendChild(readButton);
 
@@ -115,7 +110,7 @@ function showForm() {
     submitButton.innerText = 'Submit';
     submitButton.setAttribute("type", "button");
     submitButton.setAttribute("onclick", `addBookToLibrary(document.getElementById("Author").value, document.getElementById("Title").value,
-    document.getElementById("Page count").value, document.getElementById("Been read?").value)`);
+    document.getElementById("Page count").value, (document.getElementById("Been read?").value === "true"))`);
     
     bookForm.appendChild(submitButton);
 
