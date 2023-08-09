@@ -7,6 +7,9 @@ function Book(author, title, pages, read) {
     this.read = read;
 }
 
+//I made this a prototype function because the lesson said to
+//but I don't use 'this' or anything that allows it to be reusable
+// upon review i don't think prototypes use 'this', maybe
 Book.prototype.readBook = function(title) {
     newTitle = title.slice(5)
     const objectPos = myLibrary.findIndex(item => item.title == newTitle);
