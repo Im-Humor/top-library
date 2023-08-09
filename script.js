@@ -10,6 +10,10 @@ function Book(author, title, pages, read) {
 //I made this a prototype function because the lesson said to
 //but I don't use 'this' or anything that allows it to be reusable
 // upon review i don't think prototypes use 'this', maybe
+// also, the reason i'm using slice to shorten the title
+// is because i call this function on the id of an html element
+// and the id's are created with a del-[title] or read-[title] 
+// subheader based on the action needed for the read/delete buttons
 Book.prototype.readBook = function(title) {
     newTitle = title.slice(5)
     const objectPos = myLibrary.findIndex(item => item.title == newTitle);
