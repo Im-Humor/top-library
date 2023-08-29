@@ -23,7 +23,7 @@ const library = (() => {
             newCardAuthor.classList.add("book-author")
             newCardAuthor.innerText = libraryInventory[x]["author"]
             const newCardTitle = document.createElement("div")
-            newCardTitle.classList.add("book-author")
+            newCardTitle.classList.add("book-title")
             newCardTitle.innerText = libraryInventory[x]["title"]
             const newCardPages = document.createElement("div")
             newCardPages.classList.add("book-pages")
@@ -31,10 +31,27 @@ const library = (() => {
             const newCardReadStatus = document.createElement("div")
             newCardReadStatus.classList.add("book-read-status")
             newCardReadStatus.innerText = libraryInventory[x]["read_status"]
+            const newCardId = document.createElement("div")
+            newCardId.classList.add("book-id")
+            newCardId.innerText = libraryInventory[x]["book_id"]
+            const newCardDeleteButton = document.createElement("button")
+            newCardDeleteButton.setAttribute("type", "button")
+            newCardDeleteButton.innerText = "delete"
+
+            const deleteFunction = (event) => {
+                let objectId = event.target.parentNode.querySelector('.book-id').innerText;
+                let bookLoc = libraryInventory.findIndex(book => book.book_id == objectId);
+                libraryInventory.splice(bookLoc, 1)
+                event.target.removeEventListener("click", deleteFunction)
+                refreshLibrary()
+            }
+            newCardDeleteButton.addEventListener("click", deleteFunction)
             newCard.appendChild(newCardAuthor)
             newCard.appendChild(newCardTitle)
             newCard.appendChild(newCardPages)
             newCard.appendChild(newCardReadStatus)
+            newCard.appendChild(newCardId)
+            newCard.appendChild(newCardDeleteButton)
             libraryContainer.appendChild(newCard)
         }
     }
